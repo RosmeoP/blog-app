@@ -1,11 +1,7 @@
-
-
 import React, { useState } from 'react';
+import Button from './buttonSpace'; // Adjust the path if needed
 
-
-const initialPosts = [
-  
-];
+const initialPosts = [];
 
 export default function PostsManager() {
   const [posts, setPosts] = useState(initialPosts);
@@ -25,15 +21,14 @@ export default function PostsManager() {
     },
   });
 
- 
   const handleSavePost = () => {
     if (editingPost) {
       // Update existing post
-      setPosts(posts.map(post => post.id === editingPost.id ? { ...editingPost, ...newPost } : post));
+      setPosts(posts.map(post => post.id === editingPost.id ? { ...editingPost, ...newPost, isNew: false } : post));
       setEditingPost(null);
     } else {
       // Create new post
-      setPosts([...posts, { ...newPost, id: Date.now() }]);
+      setPosts([...posts, { ...newPost, id: Date.now(), isNew: true }]);
     }
     setNewPost({
       title: '',
@@ -51,22 +46,18 @@ export default function PostsManager() {
     });
   };
 
-  // Delete Post
   const handleDeletePost = (id) => {
     setPosts(posts.filter(post => post.id !== id));
   };
 
-  // Start editing
   const handleEditPost = (post) => {
     setEditingPost(post);
     setNewPost(post);
   };
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    // Handle nested properties
+
     if (name.startsWith('category.') || name.startsWith('author.')) {
       const [parentKey, key] = name.split('.');
       setNewPost(prevPost => ({
@@ -82,17 +73,20 @@ export default function PostsManager() {
   };
 
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-black py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Add a Blog Post</h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
-          Ready to share your insights and stories with the world? Use the form below to create a new post and let your voice be heard!
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Add a Blog Post</h2>
+          <p className="mt-2 text-lg leading-8 text-gray-400">
+            Ready to share your insights and stories with the world? Use the form below to create a new post and let your voice be heard!
           </p>
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post) => (
-            <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
+            <article
+              key={post.id}
+              className={`flex max-w-xl flex-col items-start justify-between ${post.isNew ? 'bg-white' : 'bg-black'}  p-4 rounded-lg`}
+            >
               <div className="flex items-center gap-x-4 text-xs">
                 <time dateTime={post.datetime} className="text-gray-500">
                   {post.date}
@@ -130,85 +124,70 @@ export default function PostsManager() {
             </article>
           ))}
         </div>
-        
+
         {/* Form for creating or editing posts */}
         <div className="mt-10">
-          <h3 className="text-xl font-bold text-gray-900">{editingPost ? 'Edit Post' : 'Add New Post'}</h3>
-          <div className="mt-6">
+          <h3 className="text-xl font-bold text-white">{editingPost ? 'Edit Post' : 'Add New Post'}</h3>
+          <div className="mt-6 border border-[#372b38] p-4 flex flex-col gap-4 rounded-lg">
             <input
               name="title"
               value={newPost.title}
               onChange={handleChange}
               placeholder="Title"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
-            {/*
-            <input
-              name="href"
-              value={newPost.href}
-              onChange={handleChange}
-              placeholder="Link"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
-            />*/}
             <textarea
               name="description"
               value={newPost.description}
               onChange={handleChange}
               placeholder="Description"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
             <input
               name="date"
               type="date"
               value={newPost.date}
               onChange={handleChange}
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
             <input
               name="datetime"
               type="datetime-local"
               value={newPost.datetime}
               onChange={handleChange}
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
             <input
               name="category.title"
               value={newPost.category.title}
               onChange={handleChange}
               placeholder="Category Title"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
-            />
-            <input
-              name="category.href"
-              value={newPost.category.href}
-              onChange={handleChange}
-              placeholder="Category Link"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
             <input
               name="author.name"
               value={newPost.author.name}
               onChange={handleChange}
               placeholder="Author Name"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
             <input
               name="author.role"
               value={newPost.author.role}
               onChange={handleChange}
               placeholder="Author Role"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
             <input
               name="author.imageUrl"
               value={newPost.author.imageUrl}
               onChange={handleChange}
               placeholder="Author Image URL"
-              className="w-full p-2 mt-2 rounded bg-gray-100 text-gray-900"
+              className="w-full p-2 rounded-lg bg-transparent border border-[#ffffff] text-white placeholder-opacity-75 focus:outline-none input-hover-purple"
             />
-            <button onClick={handleSavePost} className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500">
-              {editingPost ? 'Update Post' : 'Add Post'}
-            </button>
+            <Button
+              onClick={handleSavePost}
+            />
           </div>
         </div>
       </div>

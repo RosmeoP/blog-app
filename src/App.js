@@ -3,6 +3,7 @@ import Navbar from './components/navbar'
 import Blog from './components/blog';
 import Posts  from './components/Posts';
 import PostsManager from './components/PostManager';
+import Footer from './components/Footer';
 
 
 
@@ -16,13 +17,8 @@ function App() {
    <Blog/>
    <Posts/>
    <PostsManager/>
-  
-   
- 
-  
-  
+   <Footer/>
    <div class="main"></div>
-   
     </div>
   );
 }

@@ -89,7 +89,7 @@ const postOne = () => {
                 Anibal Andrade
               </a>
             </p>
-            <p className="text-gray-400">Software Engineer</p>
+            <p className="text-gray-400">Software Engineer and Artist</p>
           </div>
         </div>
       </article>

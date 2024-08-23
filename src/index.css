@@ -7,7 +7,45 @@ body {
   background-color: #000;
 }
 
+.input-hover-purple {
+  transition: border-color 0.3s;
+}
 
+.input-hover-purple:hover {
+  border-color: #a66bbf; 
+}
+.input-hover-purple {
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Apply hover effect */
+.input-hover-purple:hover {
+  border-color: #a66bbf; 
+  background-color: #2a2a2a; 
+}
+
+
+input[type="date"]::-webkit-datetime-edit, 
+input[type="datetime-local"]::-webkit-datetime-edit {
+  color: #fff; 
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1); 
+}
+
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="datetime-local"]::-webkit-datetime-edit-text {
+  color: #fff; 
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="datetime-local"]::-webkit-datetime-edit-hour-field,
+input[type="datetime-local"]::-webkit-datetime-edit-minute-field {
+  color: #fff; 
+}
 
 .main {
   position: fixed;
